@@ -1,0 +1,25 @@
+# Archivos para eliminar del proyecto (ya no se usan)
+
+## Archivos de prueba y configuración temporal:
+- test.php
+- test_config.php
+- setup_admin.php
+- setup_simple.php
+- config/database_simple.php
+- admin/productos/agregar.php (versión vieja, usar agregar_nuevo.php)
+- admin/productos/agregar.php.old
+- nul (archivo vacío creado por error)
+
+## Archivos de respaldo (pueden eliminarse después de verificar):
+- .htaccess.backup
+- .env.example (mantener solo .env)
+
+## Archivos SQL (después de ejecutarlos en producción):
+- datos_prueba.sql (solo para desarrollo)
+
+## IMPORTANTE - NO ELIMINAR:
+- database.sql (necesario para instalación inicial)
+- updates_db.sql (necesario para actualizaciones)
+- .env (contiene configuración)
+- Todos los archivos en admin/productos/ excepto agregar.php
+- Todas las carpetas uploads/

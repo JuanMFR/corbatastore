@@ -1,0 +1,38 @@
+# Environment files
+.env
+.env.local
+.env.production
+
+# Uploaded files
+uploads/productos/*
+!uploads/productos/.gitkeep
+
+# Temporary files
+*.tmp
+*.temp
+*.cache
+*.log
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-*
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Database dumps
+*.sql
+!database.sql
+!updates_db.sql
+
+# Configuration files with sensitive data
+config/local.php
+admin/.htpasswd
