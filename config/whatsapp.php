@@ -7,7 +7,7 @@
 // Configuración del número de WhatsApp
 // Formato: Código de país + número sin espacios ni guiones
 // Ejemplo para Argentina: 5491123456789
-define('WHATSAPP_NUMBER', '5491123456789');
+define('WHATSAPP_NUMBER', '5492665030600');
 
 // Mensajes predefinidos
 define('WHATSAPP_MSG_GENERAL', '¡Hola! Me interesa conocer más sobre los productos de Corbata Store 👟');

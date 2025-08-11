@@ -120,6 +120,11 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Corbata Store - Premium Footwear</title>
     
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/Corbata_Logo.png">
+    <link rel="shortcut icon" type="image/png" href="/Corbata_Logo.png">
+    <link rel="apple-touch-icon" href="/Corbata_Logo.png">
+    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1440,6 +1445,7 @@ $conn->close();
                         <li><a href="#catalogo">Catálogo</a></li>
                     </ul>
                 </div>
+                <!-- Sección comentada para futuro desarrollo
                 <div>
                     <h4 class="footer-title">Información</h4>
                     <ul class="footer-links">
@@ -1448,16 +1454,21 @@ $conn->close();
                         <li><a href="#">Privacidad</a></li>
                     </ul>
                 </div>
+                -->
                 <div>
                     <h4 class="footer-title">Contacto</h4>
                     <ul class="footer-links">
-                        <li>info@corbatastore.com</li>
-                        <li>+54 123 456 7890</li>
-                        <li>Buenos Aires, Argentina</li>
+                        <li>storecorbata@gmail.com</li>
+                        <li>+54 9 266 503 0600</li>
+                        <li>San Luis, Argentina</li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
+                <p style="margin-bottom: 12px; padding: 12px 20px; background: rgba(201, 169, 97, 0.15); border-radius: 6px; max-width: 800px; margin-left: auto; margin-right: auto;">
+                    <strong>📋 Importante:</strong> El stock y talles mostrados son referenciales. 
+                    Te recomendamos consultarnos por WhatsApp para confirmar disponibilidad.
+                </p>
                 <p>&copy; 2024 Corbata Store. Todos los derechos reservados.</p>
             </div>
         </div>

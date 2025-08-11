@@ -1,2 +1,199 @@
-# Archivo htaccess minimo para pruebas
+# =================================================================
+# CONFIGURACIÓN DE SEGURIDAD Y OPTIMIZACIÓN PARA HOSTINGER
+# =================================================================
+
+# Configuración básica de Apache
 Options -Indexes
+Options +FollowSymLinks
+
+# Motor de reescritura
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Forzar HTTPS (descomentar cuando tengas SSL activo en Hostinger)
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+    
+    # Forzar www (opcional - descomentar si lo necesitas)
+    # RewriteCond %{HTTP_HOST} !^www\. [NC]
+    # RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]
+    
+    # Bloquear acceso a archivos sensibles
+    RewriteRule ^\.env$ - [F,L]
+    RewriteRule ^config/ - [F,L]
+    RewriteRule ^.*\.sql$ - [F,L]
+    RewriteRule ^test.*\.php$ - [F,L]
+    RewriteRule ^setup.*\.php$ - [F,L]
+    
+    # Bloquear acceso a archivos de documentación
+    RewriteRule ^.*\.(md|txt)$ - [F,L]
+</IfModule>
+
+# =================================================================
+# SEGURIDAD
+# =================================================================
+
+# Proteger archivos sensibles
+<FilesMatch "^\.(?:htaccess|htpasswd|env|git)">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Bloquear acceso a archivos PHP específicos
+<FilesMatch "(test_|setup_).*\.php$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Prevenir XSS, clickjacking y otros ataques
+<IfModule mod_headers.c>
+    # Protección XSS
+    Header set X-XSS-Protection "1; mode=block"
+    
+    # Prevenir clickjacking
+    Header always set X-Frame-Options "SAMEORIGIN"
+    
+    # Prevenir sniffing de MIME type
+    Header set X-Content-Type-Options "nosniff"
+    
+    # Política de referrer
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    
+    # Content Security Policy básica
+    Header set Content-Security-Policy "default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval'; img-src 'self' https: data:; font-src 'self' https: data:;"
+    
+    # HSTS (descomentar cuando tengas SSL)
+    # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+</IfModule>
+
+# =================================================================
+# OPTIMIZACIÓN Y CACHÉ
+# =================================================================
+
+# Compresión GZIP
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# Cache del navegador
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # Imágenes - 1 mes
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/jpg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType image/x-icon "access plus 1 month"
+    
+    # CSS y JavaScript - 1 semana
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+    ExpiresByType text/javascript "access plus 1 week"
+    
+    # Fuentes - 1 mes
+    ExpiresByType font/woff2 "access plus 1 month"
+    ExpiresByType font/woff "access plus 1 month"
+    ExpiresByType font/ttf "access plus 1 month"
+    ExpiresByType font/otf "access plus 1 month"
+    
+    # HTML - sin caché
+    ExpiresByType text/html "access plus 0 seconds"
+    ExpiresByType application/xhtml+xml "access plus 0 seconds"
+</IfModule>
+
+# Control de caché adicional
+<IfModule mod_headers.c>
+    # Caché para archivos estáticos
+    <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|ico|css|js|woff|woff2|ttf|otf)$">
+        Header set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
+    
+    # Sin caché para PHP
+    <FilesMatch "\.php$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+    </FilesMatch>
+</IfModule>
+
+# =================================================================
+# CONFIGURACIÓN PHP
+# =================================================================
+
+# Configuración PHP (si el servidor lo permite)
+<IfModule mod_php7.c>
+    php_value upload_max_filesize 10M
+    php_value post_max_size 10M
+    php_value max_execution_time 300
+    php_value max_input_time 300
+    php_value memory_limit 256M
+    php_flag display_errors Off
+    php_flag log_errors On
+    php_value error_log error_log
+</IfModule>
+
+# =================================================================
+# PROTECCIÓN CONTRA BOTS MALICIOSOS
+# =================================================================
+
+# Bloquear user agents maliciosos conocidos
+<IfModule mod_rewrite.c>
+    RewriteCond %{HTTP_USER_AGENT} (360Spider|80legs|Abonti|AcoonBot|Acunetix|adbeat_bot|AddThis) [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} (ahrefsbot|alexibot|AllSubmitter|Alligator|AlphaBot|Anarchie) [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} (Apexoo|archive.org_bot|asterias|attach|Backdoor|BackStreet) [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} (BackWeb|Badass|Bandit|Barkrowler|BatchFTP|Bigfoot|Black.Hole) [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} (BLEXBot|Blow|BlowFish|Buddy|BuiltBotTough|BunnySlippers) [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} (BuzzSumo|CATExplorador|CazoodleBot|CCBot|Cegbfeieh|CheeseBot) [NC]
+    RewriteRule ^.* - [F,L]
+</IfModule>
+
+# =================================================================
+# LÍMITE DE PETICIONES (Rate Limiting básico)
+# =================================================================
+
+# Protección contra ataques de fuerza bruta al admin
+<FilesMatch "^(login|admin)\.php$">
+    <IfModule mod_rewrite.c>
+        RewriteEngine On
+        RewriteCond %{REQUEST_METHOD} POST
+        RewriteCond %{HTTP_REFERER} !^https?://(www\.)?corbatastore\.com [NC]
+        RewriteRule .* - [F]
+    </IfModule>
+</FilesMatch>
+
+# =================================================================
+# CONFIGURACIÓN DE ERRORES PERSONALIZADOS
+# =================================================================
+
+ErrorDocument 400 /error.php?code=400
+ErrorDocument 401 /error.php?code=401
+ErrorDocument 403 /error.php?code=403
+ErrorDocument 404 /error.php?code=404
+ErrorDocument 500 /error.php?code=500
+
+# =================================================================
+# MIME TYPES
+# =================================================================
+
+<IfModule mod_mime.c>
+    AddType image/webp .webp
+    AddType font/woff2 .woff2
+    AddType font/woff .woff
+    AddType application/json .json
+    AddType image/svg+xml .svg
+</IfModule>
+
+# =================================================================
+# FIN DE CONFIGURACIÓN
+# =================================================================

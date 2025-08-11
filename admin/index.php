@@ -20,6 +20,11 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administración - Catálogo de Zapatillas</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/Corbata_Logo.png">
+    <link rel="shortcut icon" type="image/png" href="/Corbata_Logo.png">
+    
     <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>

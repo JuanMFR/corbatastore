@@ -1,0 +1,57 @@
+=========================================================
+CONFIGURACIONES IMPORTANTES ANTES DE SUBIR A HOSTINGER
+=========================================================
+
+⚠️ DATOS QUE DEBES CAMBIAR OBLIGATORIAMENTE:
+
+1. NÚMERO DE WHATSAPP
+   Archivo: config/whatsapp.php
+   Línea 10: define('WHATSAPP_NUMBER', '5491123456789');
+   👉 Cambiar por tu número real de WhatsApp Business
+
+2. CREDENCIALES DE BASE DE DATOS
+   Las encuentras en Hostinger > hPanel > MySQL Databases
+   Actualizar en config/database.php (líneas 13-16):
+   - DB_HOST: 'localhost' (generalmente no cambia)
+   - DB_USER: 'u884501120_corbata' (tu usuario real)
+   - DB_PASS: 'TuPasswordReal' (tu contraseña real)
+   - DB_NAME: 'u884501120_corbatadb' (tu nombre de BD real)
+
+3. CONTRASEÑA DE ADMINISTRADOR
+   Por defecto es: admin / admin123
+   CAMBIARLA INMEDIATAMENTE después del primer login
+
+4. DOMINIO EN .HTACCESS
+   Línea 170: Cambiar tudominio.com por tu dominio real
+
+=========================================================
+ARCHIVOS QUE NO DEBES SUBIR:
+=========================================================
+❌ test.php
+❌ test_config.php
+❌ test_productos.php
+❌ setup_admin.php
+❌ setup_simple.php
+❌ Todos los archivos .md
+❌ Este archivo (IMPORTANTE_CONFIGURAR.txt)
+❌ .env (crear manualmente en servidor)
+
+=========================================================
+CARPETAS QUE NECESITAN PERMISOS DE ESCRITURA:
+=========================================================
+📁 uploads/ (chmod 755)
+📁 uploads/productos/ (chmod 755)
+📁 uploads/marcas/ (chmod 755)
+
+=========================================================
+DESPUÉS DE SUBIR, VERIFICAR:
+=========================================================
+✅ Página principal carga: https://tudominio.com
+✅ Admin funciona: https://tudominio.com/admin
+✅ WhatsApp abre con tu número correcto
+✅ Se pueden subir imágenes de productos
+✅ HTTPS está activo (certificado SSL)
+
+=========================================================
+¡NO OLVIDES CAMBIAR ESTOS DATOS ANTES DE SUBIR!
+=========================================================
